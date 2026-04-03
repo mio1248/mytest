@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ product.name }}</title>
+
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+    <style>
+        .main-top{
+            display: none !important;
+        }
+        .main-header .navbar,
+        .main-header .navbar.bootsnav,
+        .main-header .navbar.bg-light{
+            background: #000 !important;
+            border-color: #000 !important;
+        }
+        .main-header .navbar .nav-link,
+        .main-header .navbar ul.nav > li > a,
+        .main-header .attr-nav > ul > li > a,
+        .main-header .attr-nav > ul > li > a p,
+        .main-header .attr-nav > ul > li > a i{
+            color: #fff !important;
+        }
+        .detail-wrap{
+            padding: 70px 0;
+            background: #f7f7f7;
+        }
+        .detail-card{
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.08);
+        }
+        .detail-image img{
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        .detail-info h2{
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .detail-price{
+            font-size: 28px;
+            font-weight: 700;
+            color: #b0b435;
+            margin-bottom: 15px;
+        }
+        .detail-size,
+        .detail-short{
+            font-size: 17px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .detail-desc{
+            line-height: 1.9;
+            font-size: 16px;
+            color: #444;
+            white-space: pre-line;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'index' %}">
+                        <img src="{% static 'images/logo.png' %}" class="logo" alt="">
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="detail-wrap">
+        <div class="container">
+            <div class="detail-card">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 detail-image">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                        <img src="{% static 'images/pizza4.jpg' %}" alt="{{ product.name }}">
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-6 col-md-6 detail-info">
+                        <h2>{{ product.name }}</h2>
+                        <div class="detail-price">{{ product.price }}원</div>
+                        <div class="detail-size"><strong>규격:</strong> {{ product.size|default:"-" }}</div>
+                        <div class="detail-short"><strong>간단 설명:</strong> {{ product.short_description }}</div>
+                        <div class="detail-desc"><strong>상세 설명</strong><br>{{ product.description }}</div>
+                        <a href="{% url 'index' %}" class="btn hvr-hover">목록으로 돌아가기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>

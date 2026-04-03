@@ -1,0 +1,33 @@
+# --- Python 관련 ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+build/
+dist/
+
+# --- Django 관련 ---
+db.sqlite3
+db.sqlite3-journal
+media/
+static/
+# (주의: static 폴더는 배포 시 자동 생성되므로 제외하지만,
+# 프로젝트 기본 정적 파일이 들어있는 폴더명은 제외하지 않도록 주의하세요)
+
+# --- 환경 변수 및 보안 (SECRET_KEY 등) ---
+.env
+.python-version
+local_settings.py
+
+# --- 운영체제 및 에디터 관련 ---
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# --- 로그 및 임시 파일 ---
+*.log
+tmp/
