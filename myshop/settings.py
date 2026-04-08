@@ -6,7 +6,7 @@ SECRET_KEY = 'django-insecure-change-this-key-for-production'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mio27.pythonanywhere.com']
 
 
 INSTALLED_APPS = [
