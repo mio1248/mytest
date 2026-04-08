@@ -51,6 +51,42 @@
         display: block;
     }
 
+    /* 메인 화면 상품명 초록 버튼의 검은색 퍼짐 호버 효과 복구 */
+    .categories-shop .shop-cat-box a.hvr-hover{
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: block;
+        text-align: center;
+        background: #b0b435;
+        color: #ffffff;
+        overflow: hidden;
+        isolation: isolate;
+        z-index: 3;
+        text-decoration: none;
+    }
+
+    .categories-shop .shop-cat-box a.hvr-hover::after{
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: #000000;
+        border-radius: 100%;
+        transform: scale(0);
+        transition: transform 0.35s ease-out;
+        z-index: -1;
+    }
+
+    .categories-shop .shop-cat-box a.hvr-hover:hover::after{
+        transform: scale(2.25);
+    }
+
+    .categories-shop .shop-cat-box a.hvr-hover:hover{
+        color: #ffffff;
+        text-decoration: none;
+    }
+
     .box-add-products .offer-box-products{
         overflow: hidden;
     }

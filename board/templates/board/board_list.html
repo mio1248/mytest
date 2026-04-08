@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %}게시판{% endblock %}
+{% block nav_gallery_class %}active{% endblock %}
+
+{% block extra_style %}
+<style>
+    .board-page {
+        padding: 70px 0;
+        background: #f7f7f7;
+        min-height: 700px;
+    }
+
+    .board-table-card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .board-list-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+    }
+
+    .board-list-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0;
+        color: #222;
+    }
+
+    .board-write-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 120px;
+        height: 44px;
+        padding: 0 20px;
+        border-radius: 6px;
+        border: 1px solid #b0b435;
+        background: #b0b435;
+        color: #fff !important;
+        font-weight: 700;
+        text-decoration: none !important;
+        transition: 0.2s ease;
+    }
+
+    .board-write-btn:hover {
+        background: #8f9327;
+        border-color: #8f9327;
+        color: #fff !important;
+    }
+
+    .board-table {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .board-table thead th {
+        background: #111;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 700;
+        padding: 14px 16px;
+        border: none;
+        text-align: center;
+    }
+
+    .board-table tbody td {
+        padding: 16px;
+        border-top: 1px solid #ececec;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .board-table .board-title-cell {
+        text-align: left;
+    }
+
+    .board-title-link {
+        color: #222;
+        font-weight: 600;
+        text-decoration: none !important;
+    }
+
+    .board-title-link:hover {
+        color: #b0b435;
+    }
+
+    .board-empty-row td {
+        padding: 30px 16px !important;
+        color: #777;
+    }
+
+    @media (max-width: 767px) {
+        .board-table-card {
+            padding: 20px;
+        }
+
+        .board-table-wrap {
+            overflow-x: auto;
+        }
+
+        .board-table {
+            min-width: 640px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="board-page">
+    <div class="container">
+        <div class="board-table-card">
+            <div class="board-list-header">
+                <h3 class="board-list-title">게시판 목록</h3>
+                <a href="{% url 'board_create' %}" class="board-write-btn">글쓰기</a>
+            </div>
+
+            <div class="board-table-wrap">
+                <table class="board-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 90px;">번호</th>
+                            <th>제목</th>
+                            <th style="width: 150px;">작성자</th>
+                            <th style="width: 190px;">게시한 시간</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in posts %}
+                        <tr>
+                            <td>{{ post.id }}</td>
+                            <td class="board-title-cell">
+                                <a href="{% url 'board_detail' post.id %}" class="board-title-link">{{ post.title }}</a>
+                            </td>
+                            <td>{{ post.author.username }}</td>
+                            <td>{{ post.created_at|date:'Y-m-d H:i' }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr class="board-empty-row">
+                            <td colspan="4">아직 등록된 게시글이 없습니다.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

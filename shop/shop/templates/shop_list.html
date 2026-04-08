@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}전체 메뉴 - 피자샵{% endblock %}
+
+{% block nav_shop_class %}active{% endblock %}
+
+{% block extra_style %}
+<style>
+    .shop-page-hero{
+        background: url("{% static 'images/all-bg-title.jpg' %}") center center / cover no-repeat;
+        padding: 70px 0;
+        position: relative;
+    }
+
+    .shop-page-hero::before{
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .shop-page-hero .container{
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        color: #fff;
+    }
+
+    .shop-page-hero h1{
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .shop-page-hero p{
+        margin: 0;
+        font-size: 17px;
+    }
+
+    .shop-list-wrap{
+        padding: 70px 0;
+        background: #f7f7f7;
+    }
+
+    .shop-cat-box{
+        background: #fff;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+
+    .shop-cat-box .product-link{
+        display: block;
+    }
+
+    .shop-cat-box img{
+        width: 100%;
+        height: 255px;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        transition: transform 0.25s ease;
+    }
+
+    .shop-cat-box:hover img{
+        transform: scale(1.03);
+    }
+
+    .shop-cat-box .btn{
+        width: 100%;
+        border-radius: 0;
+        padding: 16px 20px;
+        font-size: 16px;
+        font-weight: 700;
+        display: block;
+    }
+
+    .product-meta{
+        padding: 18px 20px 10px;
+    }
+
+    .product-price{
+        font-size: 22px;
+        font-weight: 700;
+        color: #b0b435;
+        margin-bottom: 8px;
+    }
+
+    .product-short{
+        font-size: 15px;
+        color: #555;
+        margin: 0;
+        min-height: 48px;
+    }
+
+    @media (max-width: 767px){
+        .shop-page-hero h1{
+            font-size: 30px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="shop-page-hero">
+    <div class="container">
+        <h1>전체 피자 메뉴</h1>
+        <p>관리자에서 등록한 활성 상품이 이 페이지에 모두 표시됩니다.</p>
+    </div>
+</div>
+
+<div class="shop-list-wrap">
+    <div class="container">
+        <div class="row">
+            {% for product in products %}
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="shop-cat-box">
+                    <a class="product-link" href="{% url 'product_detail' product.slug %}">
+                        {% if product.image %}
+                        <img class="img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                        <img class="img-fluid" src="{% static 'images/pizza4.jpg' %}" alt="{{ product.name }}">
+                        {% endif %}
+                    </a>
+                    <div class="product-meta">
+                        <div class="product-price">{{ product.price }}원</div>
+                        <p class="product-short">{{ product.short_description }}</p>
+                    </div>
+                    <a class="btn hvr-hover" href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>등록된 상품이 없습니다.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

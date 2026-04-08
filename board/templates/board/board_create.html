@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}게시글 작성{% endblock %}
+{% block nav_gallery_class %}active{% endblock %}
+
+{% block extra_style %}
+<style>
+    .board-page {
+        padding: 70px 0;
+        background: #f7f7f7;
+        min-height: 700px;
+    }
+
+    .board-card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .board-form-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #222;
+    }
+
+    .board-meta-text {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 16px;
+    }
+
+    .board-form-group {
+        margin-bottom: 20px;
+    }
+
+    .board-form-group label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: #222;
+    }
+
+    .board-form-group input,
+    .board-form-group textarea {
+        width: 100%;
+        border: 1px solid #d8d8d8;
+        border-radius: 6px;
+        padding: 12px 14px;
+    }
+
+    .board-form-group textarea {
+        resize: vertical;
+    }
+
+    .board-btn-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .board-submit-btn,
+    .board-back-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 120px;
+        height: 44px;
+        padding: 0 20px;
+        border-radius: 6px;
+        border: 1px solid #b0b435;
+        background: #b0b435;
+        color: #fff !important;
+        font-weight: 700;
+        text-decoration: none !important;
+        transition: 0.2s ease;
+    }
+
+    .board-submit-btn:hover,
+    .board-back-btn:hover {
+        background: #8f9327;
+        border-color: #8f9327;
+        color: #fff !important;
+    }
+
+    .board-back-btn {
+        background: transparent;
+        color: #b0b435 !important;
+    }
+
+    .board-back-btn:hover {
+        color: #fff !important;
+    }
+
+    .board-error-list {
+        margin: 8px 0 0;
+        padding-left: 18px;
+        color: #d9534f;
+        font-size: 14px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="board-page">
+    <div class="container">
+        <div class="board-card">
+            <h3 class="board-form-title">게시글 작성</h3>
+            <p class="board-meta-text">로그인 사용자: {{ user.username }}님</p>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="board-form-group">
+                    <label for="id_title">제목</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                    <ul class="board-error-list">
+                        {% for error in form.title.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <div class="board-form-group">
+                    <label for="id_content">내용</label>
+                    {{ form.content }}
+                    {% if form.content.errors %}
+                    <ul class="board-error-list">
+                        {% for error in form.content.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <div class="board-btn-group">
+                    <button type="submit" class="board-submit-btn">게시글 등록</button>
+                    <a href="{% url 'board_list' %}" class="board-back-btn">목록으로</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

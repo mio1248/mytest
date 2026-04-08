@@ -5,8 +5,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-change-this-key-for-production'
 
 DEBUG = True
-
-ALLOWED_HOSTS = ['mio27.pythonanywhere.com']
+import os
+ALLOWED_HOSTS = ['mio27.pythonanywhere.com','127.0.0.1']
 
 
 INSTALLED_APPS = [
@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop',
+    'board',
 ]
 
 MIDDLEWARE = [
@@ -91,3 +92,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
 LOGIN_URL = '/accounts/login/'
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'shop','static'),)
+STATIC_ROOT = os.path.join(BASE_DIR, "static")#배포 전에 최종 모을 폴더 (python manage.py collectstatic)
+MEDIA_URL='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")

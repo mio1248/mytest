@@ -1,12 +1,32 @@
+from django.db import OperationalError, ProgrammingError
 from django.shortcuts import get_object_or_404, render
 
 from .models import Product
 
 
+def _get_main_products():
+    base_qs = Product.objects.filter(is_active=True)
+    try:
+        featured = list(base_qs.filter(is_featured=True).order_by('featured_order', 'id')[:6])
+        if featured:
+            return featured
+    except (OperationalError, ProgrammingError):
+        pass
+    return list(base_qs.order_by('id')[:6])
+
+
 def index(request):
-    products = Product.objects.filter(is_active=True)
+    products = _get_main_products()
     return render(request, 'index.html', {'products': products})
 
+
+def shop_list(request):
+    try:
+        products = Product.objects.filter(is_active=True).order_by('featured_order', 'id')
+        products = list(products)
+    except (OperationalError, ProgrammingError):
+        products = list(Product.objects.filter(is_active=True).order_by('id'))
+    return render(request, 'shop_list.html', {'products': products})
 
 
 def product_detail(request, slug):

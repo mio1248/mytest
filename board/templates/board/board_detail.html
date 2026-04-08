@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}게시글 상세보기{% endblock %}
+{% block nav_gallery_class %}active{% endblock %}
+
+{% block extra_style %}
+<style>
+    .board-detail-page {
+        padding: 70px 0;
+        background: #f7f7f7;
+        min-height: 700px;
+    }
+
+    .board-detail-card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 35px;
+    }
+
+    .board-detail-title {
+        font-size: 30px;
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 15px;
+        word-break: break-word;
+    }
+
+    .board-detail-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        margin-bottom: 24px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #ececec;
+        color: #666;
+        font-size: 15px;
+    }
+
+    .board-detail-content {
+        min-height: 220px;
+        line-height: 1.8;
+        color: #333;
+        white-space: pre-wrap;
+        word-break: break-word;
+        margin-bottom: 30px;
+    }
+
+    .board-action-group {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .board-action-btn,
+    .board-delete-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 120px;
+        height: 44px;
+        padding: 0 20px;
+        border-radius: 6px;
+        border: 1px solid #b0b435;
+        background: #b0b435;
+        color: #fff !important;
+        font-weight: 700;
+        text-decoration: none !important;
+        transition: 0.2s ease;
+    }
+
+    .board-action-btn:hover,
+    .board-delete-btn:hover {
+        background: #8f9327;
+        border-color: #8f9327;
+        color: #fff !important;
+    }
+
+    .board-delete-btn {
+        background: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .board-delete-btn:hover {
+        background: #bb2d3b;
+        border-color: #bb2d3b;
+    }
+
+    .board-delete-form {
+        margin: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="board-detail-page">
+    <div class="container">
+        <div class="board-detail-card">
+            <h2 class="board-detail-title">{{ post.title }}</h2>
+            <div class="board-detail-meta">
+                <span><strong>번호</strong> {{ post.id }}</span>
+                <span><strong>작성자</strong> {{ post.author.username }}</span>
+                <span><strong>게시한 시간</strong> {{ post.created_at|date:'Y-m-d H:i' }}</span>
+            </div>
+            <div class="board-detail-content">{{ post.content|default:'내용은 없습니다.' }}</div>
+
+            <div class="board-action-group">
+                {% if can_manage %}
+                <a href="{% url 'board_update' post.id %}" class="board-action-btn">게시글 수정</a>
+                <form method="post" action="{% url 'board_delete' post.id %}" class="board-delete-form" onsubmit="return confirm('이 게시글을 삭제하시겠습니까?');">
+                    {% csrf_token %}
+                    <button type="submit" class="board-delete-btn">게시글 삭제</button>
+                </form>
+                {% endif %}
+                <a href="{% url 'board_list' %}" class="board-action-btn">목록으로</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

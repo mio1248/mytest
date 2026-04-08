@@ -1,103 +1,109 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ product.name }} - 피자샵{% endblock %}
-
+{% block title %}{{ product.name }}{% endblock %}
 {% block nav_shop_class %}active{% endblock %}
 
 {% block extra_style %}
 <style>
-    .detail-wrap{
+    .product-detail-page {
         padding: 70px 0;
         background: #f7f7f7;
-        min-height: calc(100vh - 120px);
+        min-height: 700px;
     }
 
-    .detail-card{
+    .product-detail-card {
         background: #fff;
-        padding: 40px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.08);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 30px;
     }
 
-    .detail-image img{
+    .product-detail-image {
         width: 100%;
-        height: 450px;
+        height: 420px;
         object-fit: cover;
         object-position: center;
         display: block;
+        background: #fafafa;
     }
 
-    .detail-info h2{
+    .product-detail-name {
         font-size: 34px;
         font-weight: 700;
-        margin-bottom: 15px;
+        color: #222;
+        margin-bottom: 12px;
     }
 
-    .detail-price{
+    .product-detail-price {
+        color: #b0b435;
         font-size: 28px;
         font-weight: 700;
-        color: #b0b435;
-        margin-bottom: 15px;
+        margin-bottom: 14px;
     }
 
-    .detail-size,
-    .detail-short{
-        font-size: 17px;
-        margin-bottom: 15px;
-        color: #333;
-    }
-
-    .detail-desc{
-        line-height: 1.9;
+    .product-detail-size {
         font-size: 16px;
-        color: #444;
-        white-space: pre-line;
-        margin-bottom: 25px;
+        color: #555;
+        margin-bottom: 16px;
     }
 
-    @media (max-width: 991px){
-        .detail-card{
-            padding: 25px;
-        }
+    .product-detail-short {
+        color: #666;
+        font-size: 17px;
+        margin-bottom: 20px;
+    }
 
-        .detail-image{
-            margin-bottom: 30px;
-        }
+    .product-detail-desc {
+        color: #333;
+        line-height: 1.9;
+        white-space: pre-wrap;
+        word-break: break-word;
+        margin-bottom: 30px;
+    }
 
-        .detail-image img{
-            height: 320px;
-        }
+    .product-back-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 150px;
+        height: 46px;
+        padding: 0 20px;
+        border-radius: 4px;
+        border: 1px solid #b0b435;
+        background: #b0b435;
+        color: #fff !important;
+        font-weight: 700;
+        text-decoration: none !important;
+    }
 
-        .detail-info h2{
-            font-size: 28px;
-        }
+    .product-back-btn:hover {
+        background: #8f9327;
+        border-color: #8f9327;
     }
 </style>
 {% endblock %}
 
-{% block page_plugins %}
-<script src="{% static 'js/owl.carousel.min.js' %}"></script>
-{% endblock %}
-
 {% block content %}
-<div class="detail-wrap">
+<div class="product-detail-page">
     <div class="container">
-        <div class="detail-card">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-6 detail-image">
+        <div class="product-detail-card">
+            <div class="row">
+                <div class="col-lg-6">
                     {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-detail-image">
                     {% else %}
-                    <img src="{% static 'images/pizza4.jpg' %}" alt="{{ product.name }}">
+                    <img src="{% static 'images/pizza4.jpg' %}" alt="{{ product.name }}" class="product-detail-image">
                     {% endif %}
                 </div>
-                <div class="col-lg-6 col-md-6 detail-info">
-                    <h2>{{ product.name }}</h2>
-                    <div class="detail-price">{{ product.price }}원</div>
-                    <div class="detail-size"><strong>규격:</strong> {{ product.size|default:"-" }}</div>
-                    <div class="detail-short"><strong>간단 설명:</strong> {{ product.short_description }}</div>
-                    <div class="detail-desc"><strong>상세 설명</strong><br>{{ product.description }}</div>
-                    <a href="{% url 'index' %}" class="btn hvr-hover">목록으로 돌아가기</a>
+                <div class="col-lg-6">
+                    <h2 class="product-detail-name">{{ product.name }}</h2>
+                    <div class="product-detail-price">{{ product.price }}원</div>
+                    {% if product.size %}
+                    <div class="product-detail-size"><strong>사이즈:</strong> {{ product.size }}</div>
+                    {% endif %}
+                    <p class="product-detail-short">{{ product.short_description }}</p>
+                    <div class="product-detail-desc">{{ product.description }}</div>
+                    <a href="{% url 'shop_list' %}" class="product-back-btn">상품 목록으로</a>
                 </div>
             </div>
         </div>

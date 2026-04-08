@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}상품 목록{% endblock %}
+{% block nav_shop_class %}active{% endblock %}
+
+{% block extra_style %}
+<style>
+    .shop-list-page {
+        padding: 70px 0;
+        background: #f7f7f7;
+        min-height: 700px;
+    }
+
+    .shop-list-title {
+        text-align: center;
+        margin-bottom: 38px;
+    }
+
+    .shop-list-title h2 {
+        font-size: 34px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #222;
+    }
+
+    .shop-list-title p {
+        margin: 0;
+        color: #666;
+    }
+
+    .shop-product-card {
+        background: #fff;
+        overflow: hidden;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+        height: calc(100% - 30px);
+        transition: transform 0.2s ease;
+    }
+
+    .shop-product-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .shop-product-link {
+        text-decoration: none !important;
+        color: inherit;
+        display: block;
+        height: 100%;
+    }
+
+    .shop-product-image {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    .shop-product-body {
+        padding: 18px;
+        text-align: center;
+    }
+
+    .shop-product-name {
+        font-size: 24px;
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 8px;
+    }
+
+    .shop-product-desc {
+        color: #666;
+        min-height: 48px;
+        margin-bottom: 12px;
+    }
+
+    .shop-product-price {
+        color: #b0b435;
+        font-size: 21px;
+        font-weight: 700;
+    }
+
+    .shop-empty-box {
+        background: #fff;
+        padding: 60px 20px;
+        text-align: center;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="shop-list-page">
+    <div class="container">
+        <div class="shop-list-title">
+            <h2>피자 메뉴</h2>
+            <p>관리자에 등록된 상품이 이 페이지에 모두 표시됩니다.</p>
+        </div>
+
+        <div class="row">
+            {% for product in products %}
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="shop-product-card">
+                    <a href="{% url 'product_detail' product.slug %}" class="shop-product-link">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="shop-product-image">
+                        {% else %}
+                        <img src="{% static 'images/pizza4.jpg' %}" alt="{{ product.name }}" class="shop-product-image">
+                        {% endif %}
+                        <div class="shop-product-body">
+                            <h3 class="shop-product-name">{{ product.name }}</h3>
+                            <p class="shop-product-desc">{{ product.short_description }}</p>
+                            <div class="shop-product-price">{{ product.price }}원</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="shop-empty-box">
+                    <p>등록된 상품이 없습니다.</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
