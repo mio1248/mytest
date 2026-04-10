@@ -95,7 +95,7 @@
     <div class="container">
         <div class="shop-list-title">
             <h2>피자 메뉴</h2>
-            <p>관리자에 등록된 상품이 이 페이지에 모두 표시됩니다.</p>
+            <p>관리자에 등록된 활성 상품이 이 페이지에 모두 표시됩니다.</p>
         </div>
 
         <div class="row">
@@ -103,8 +103,8 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="shop-product-card">
                     <a href="{% url 'product_detail' product.slug %}" class="shop-product-link">
-                        {% if product.image %}
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="shop-product-image">
+                        {% if product.image and product.image.name %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="shop-product-image" onerror="this.onerror=null; this.src='{% static 'images/pizza4.jpg' %}';">
                         {% else %}
                         <img src="{% static 'images/pizza4.jpg' %}" alt="{{ product.name }}" class="shop-product-image">
                         {% endif %}

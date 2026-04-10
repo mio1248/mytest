@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ product.name }}{% endblock %}
+{% block title %}{{ product.name }} - 피자샵{% endblock %}
 {% block nav_shop_class %}active{% endblock %}
 
 {% block extra_style %}
@@ -14,71 +14,63 @@
 
     .product-detail-card {
         background: #fff;
+        border-radius: 10px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        padding: 30px;
+        padding: 35px;
     }
 
-    .product-detail-image {
+    .product-detail-image img {
         width: 100%;
         height: 420px;
         object-fit: cover;
         object-position: center;
         display: block;
-        background: #fafafa;
+        border-radius: 8px;
     }
 
     .product-detail-name {
         font-size: 34px;
         font-weight: 700;
         color: #222;
-        margin-bottom: 12px;
-    }
-
-    .product-detail-price {
-        color: #b0b435;
-        font-size: 28px;
-        font-weight: 700;
-        margin-bottom: 14px;
-    }
-
-    .product-detail-size {
-        font-size: 16px;
-        color: #555;
         margin-bottom: 16px;
     }
 
-    .product-detail-short {
-        color: #666;
-        font-size: 17px;
-        margin-bottom: 20px;
+    .product-detail-price {
+        font-size: 28px;
+        font-weight: 700;
+        color: #b0b435;
+        margin-bottom: 14px;
     }
 
+    .product-detail-size,
+    .product-detail-short,
     .product-detail-desc {
-        color: #333;
-        line-height: 1.9;
-        white-space: pre-wrap;
-        word-break: break-word;
-        margin-bottom: 30px;
+        color: #444;
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 16px;
     }
 
     .product-back-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-width: 150px;
-        height: 46px;
+        min-width: 140px;
+        height: 44px;
         padding: 0 20px;
-        border-radius: 4px;
+        border-radius: 6px;
         border: 1px solid #b0b435;
         background: #b0b435;
         color: #fff !important;
         font-weight: 700;
         text-decoration: none !important;
+        transition: 0.2s ease;
     }
 
     .product-back-btn:hover {
         background: #8f9327;
         border-color: #8f9327;
+        color: #fff !important;
     }
 </style>
 {% endblock %}
@@ -87,15 +79,15 @@
 <div class="product-detail-page">
     <div class="container">
         <div class="product-detail-card">
-            <div class="row">
-                <div class="col-lg-6">
-                    {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-detail-image">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6 product-detail-image">
+                    {% if product.image and product.image.name %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" onerror="this.onerror=null; this.src='{% static 'images/pizza4.jpg' %}';">
                     {% else %}
-                    <img src="{% static 'images/pizza4.jpg' %}" alt="{{ product.name }}" class="product-detail-image">
+                    <img src="{% static 'images/pizza4.jpg' %}" alt="{{ product.name }}">
                     {% endif %}
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <h2 class="product-detail-name">{{ product.name }}</h2>
                     <div class="product-detail-price">{{ product.price }}원</div>
                     {% if product.size %}

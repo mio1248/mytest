@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block title %}피자샵{% endblock %}
-
 {% block nav_home_class %}active{% endblock %}
 
 {% block extra_style %}
@@ -51,7 +50,6 @@
         display: block;
     }
 
-    /* 메인 화면 상품명 초록 버튼의 검은색 퍼짐 호버 효과 복구 */
     .categories-shop .shop-cat-box a.hvr-hover{
         position: absolute;
         left: 0;
@@ -98,18 +96,6 @@
         object-position: center;
         display: block;
     }
-
-    .latest-blog .blog-box .blog-img{
-        overflow: hidden;
-    }
-
-    .latest-blog .blog-box .blog-img img{
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-        object-position: center;
-        display: block;
-    }
 </style>
 {% endblock %}
 
@@ -123,8 +109,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1>
-                        <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p>
-                        <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                        <p class="m-b-40">대표 상품은 메인 화면에 최대 6개까지 표시됩니다.</p>
+                        <p><a class="btn hvr-hover" href="{% url 'shop_list' %}">Shop New</a></p>
                     </div>
                 </div>
             </div>
@@ -143,10 +129,19 @@
             {% for product in products %}
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
-                    {% if product.image %}
-                    <img class="img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}" style="cursor: pointer;" onclick="location.href='{% url 'product_detail' product.slug %}'" />
+                    {% if product.image and product.image.name %}
+                    <img class="img-fluid"
+                         src="{{ product.image.url }}"
+                         alt="{{ product.name }}"
+                         style="cursor: pointer;"
+                         onclick="location.href='{% url 'product_detail' product.slug %}'"
+                         onerror="this.onerror=null; this.src='{% static 'images/pizza4.jpg' %}';" />
                     {% else %}
-                    <img class="img-fluid" src="{% static 'images/pizza4.jpg' %}" alt="{{ product.name }}" style="cursor: pointer;" onclick="location.href='{% url 'product_detail' product.slug %}'" />
+                    <img class="img-fluid"
+                         src="{% static 'images/pizza4.jpg' %}"
+                         alt="{{ product.name }}"
+                         style="cursor: pointer;"
+                         onclick="location.href='{% url 'product_detail' product.slug %}'" />
                     {% endif %}
                     <a class="btn hvr-hover" href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
                 </div>

@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from .models import Product
 
 
+
 def _get_main_products():
     base_qs = Product.objects.filter(is_active=True)
     try:
@@ -15,18 +16,20 @@ def _get_main_products():
     return list(base_qs.order_by('id')[:6])
 
 
+
 def index(request):
     products = _get_main_products()
     return render(request, 'index.html', {'products': products})
 
 
+
 def shop_list(request):
     try:
-        products = Product.objects.filter(is_active=True).order_by('featured_order', 'id')
-        products = list(products)
+        products = list(Product.objects.filter(is_active=True).order_by('featured_order', 'id'))
     except (OperationalError, ProgrammingError):
         products = list(Product.objects.filter(is_active=True).order_by('id'))
     return render(request, 'shop_list.html', {'products': products})
+
 
 
 def product_detail(request, slug):
